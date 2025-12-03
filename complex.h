@@ -5,6 +5,7 @@
 #include <ostream>
 #include <istream>
 
+
 using namespace std;
 
 class Complex {
@@ -14,6 +15,14 @@ class Complex {
     public:
         Complex(int real , int img);
         Complex();
+        
+        // Rule of Five
+        Complex(const Complex& other);              // Copy constructor
+        Complex(Complex&& other) noexcept;          // Move constructor
+        Complex& operator=(const Complex& other);   // Copy assignment operator
+        Complex& operator=(Complex&& other) noexcept; // Move assignment operator
+        ~Complex();                                  // Destructor
+        
         void setReal(int);
         void setImag(int);
         int getReal();
@@ -23,20 +32,29 @@ class Complex {
         Complex addInt(int x);
         void displayComplex();
         
+        // Arithmetic operators with another Complex
         friend Complex operator+(const Complex& c1, const Complex& c2);
         friend Complex operator-(const Complex& c1 , const Complex& c2);
-        friend Complex operator+(const Complex& c, int x);
-        friend Complex operator-(const Complex& c , int x);
-        friend Complex& operator++(Complex& c); // Prefix increment
-        friend Complex operator++(Complex& c, int); // Postfix increment
-        friend Complex& operator--(Complex& c); // Prefix decrement
-        friend Complex operator--(Complex& c, int); // Postfix decrement
         
+        
+        Complex operator+(int x) const;
+        Complex operator-(int x) const;
+        
+        // Increment and Decrement 
+        Complex& operator++(); // Prefix increment
+        Complex operator++(int); // Postfix increment
+        Complex& operator--(); // Prefix decrement
+        Complex operator--(int); // Postfix decrement
+        
+        // Stream operators 
         friend ostream& operator<<(ostream& out, const Complex& c);
         friend istream& operator>>(istream& in, Complex& c);
 
-        friend bool operator==(const Complex& c1, const Complex& c2);
-        friend bool operator!=(const Complex& c1, const Complex& c2);
+        // Comparison operators 
+        bool operator==(const Complex& c) const;
+        bool operator!=(const Complex& c) const;
+        
+        int operator[](int index) const;
 };
 
 

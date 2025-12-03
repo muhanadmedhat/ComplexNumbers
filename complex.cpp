@@ -11,6 +11,45 @@ Complex::Complex(){
     this->imag = 0;
 }
 
+
+Complex::Complex(const Complex& other) {
+    this->real = other.real;
+    this->imag = other.imag;
+}
+
+// Move constructor
+Complex::Complex(Complex&& other) noexcept {
+    this->real = other.real;
+    this->imag = other.imag;
+    other.real = 0;
+    other.imag = 0;
+}
+
+// Copy assignment operator
+Complex& Complex::operator=(const Complex& other) {
+    if (this != &other) {
+        this->real = other.real;
+        this->imag = other.imag;
+    }
+    return *this;
+}
+
+// Move assignment operator
+Complex& Complex::operator=(Complex&& other) noexcept {
+    if (this != &other) {
+        this->real = other.real;
+        this->imag = other.imag;
+        other.real = 0;
+        other.imag = 0;
+    }
+    return *this;
+}
+
+// Destructor
+Complex::~Complex() {
+    
+}
+
 // Setter and Getter methods
 void Complex::setReal(int real){
     this->real = real;
@@ -54,33 +93,35 @@ Complex operator-(const Complex& c1, const Complex& c2){
     return Complex(c1.real - c2.real , c2.imag - c1.imag);
 }
 
-Complex operator+(const Complex& c, int x){
-    return Complex(c.real + x , c.imag);
+// Arithmetic operators with integer (member functions)
+Complex Complex::operator+(int x) const {
+    return Complex(this->real + x, this->imag);
 }
 
-Complex operator-(const Complex& c , int x){
-    return Complex(c.real - x , c.imag);
+Complex Complex::operator-(int x) const {
+    return Complex(this->real - x, this->imag);
 }
 
-Complex& operator++(Complex& c){ // Prefix increment
-    c.real++;
-    return c;
+// Increment and Decrement operators (member functions)
+Complex& Complex::operator++() { // Prefix increment
+    this->real++;
+    return *this;
 }
 
-Complex operator++(Complex& c, int){ // Postfix increment
-    Complex temp = c;
-    c.real++;
+Complex Complex::operator++(int) { // Postfix increment
+    Complex temp = *this;
+    this->real++;
     return temp;
 }
 
-Complex& operator--(Complex& c){ // Prefix decrement
-    c.real--;
-    return c;
+Complex& Complex::operator--() { // Prefix decrement
+    this->real--;
+    return *this;
 }
 
-Complex operator--(Complex& c, int){ // Postfix decrement
-    Complex temp = c;
-    c.real--;
+Complex Complex::operator--(int) { // Postfix decrement
+    Complex temp = *this;
+    this->real--;
     return temp;
 }
 
@@ -100,17 +141,22 @@ istream& operator>>(istream& in , Complex& c){
     return in;
 }
 
-bool operator ==(const Complex& c1 , const Complex& c2){
-    
-    if(c1.real != c2.real){
-        return false;
-    }
-    if(c1.imag != c2.imag){
-        return false;
-    }
-    return true;
+// Comparison operators (member functions)
+bool Complex::operator==(const Complex& c) const {
+    return (this->real == c.real) && (this->imag == c.imag);
 }
 
-bool operator !=(const Complex& c1 , const Complex& c2){
-    return !(c1==c2);   
+bool Complex::operator!=(const Complex& c) const {
+    return !(*this == c);
+}
+
+int Complex::operator[](int index) const {
+    if (index == 0) {
+        return real;
+    } else if (index == 1) {
+        return imag;
+    } else {
+        cout << "Index out of bounds. Use 0 for real part and 1 for imaginary part." << endl;
+        return 0; // or throw an exception
+    }
 }
