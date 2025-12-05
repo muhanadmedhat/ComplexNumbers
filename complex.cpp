@@ -142,13 +142,31 @@ istream& operator>>(istream& in , Complex& c){
 }
 
 // Comparison operators (member functions)
-bool Complex::operator==(const Complex& c) const {
+bool Complex::operator==(const Complex& c)  {
     return (this->real == c.real) && (this->imag == c.imag);
 }
 
-bool Complex::operator!=(const Complex& c) const {
+bool Complex::operator!=(const Complex& c)  {
     return !(*this == c);
 }
+
+bool Complex::operator>(const Complex& c){
+    return this->real > c.real;
+}
+
+bool Complex::operator<(const Complex& c){
+    return this->real < c.real;
+}
+
+bool Complex::operator>=(const Complex& c){
+    return this->real >= c.real;
+}
+
+bool Complex::operator<=(const Complex& c){
+    return this->real <= c.real;
+}
+
+
 
 int Complex::operator[](int index) const {
     if (index == 0) {

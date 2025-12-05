@@ -51,8 +51,12 @@ class Complex {
         friend istream& operator>>(istream& in, Complex& c);
 
         // Comparison operators 
-        bool operator==(const Complex& c) const;
-        bool operator!=(const Complex& c) const;
+        bool operator==(const Complex& c) ;
+        bool operator!=(const Complex& c) ;
+        bool operator>(const Complex& c);
+        bool operator<(const Complex& c);
+        bool operator>=(const Complex& c);
+        bool operator<=(const Complex& c);
         
         int operator[](int index) const;
 };
