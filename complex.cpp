@@ -157,6 +157,6 @@ int Complex::operator[](int index) const {
         return imag;
     } else {
         cout << "Index out of bounds. Use 0 for real part and 1 for imaginary part." << endl;
-        return 0; // or throw an exception
+        return 0; 
     }
 }
